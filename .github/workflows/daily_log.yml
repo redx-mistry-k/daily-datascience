@@ -1,7 +1,7 @@
 name: Daily Log Automation
 on:
   schedule:
-    - cron: "0 9 * * *"  # Runs at 09:00 UTC daily
+    - cron: "30 3 * * *"  # Runs at 09:00 UTC daily
   workflow_dispatch:     # Allows manual triggers
 
 jobs:

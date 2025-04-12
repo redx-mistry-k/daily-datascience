@@ -8,8 +8,7 @@ jobs:
   run-log:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -17,13 +16,17 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
+        run: pip install papermill jupyter
+
+      - name: Create logs directory
+        run: mkdir -p logs
+
+      - name: Run notebook
         run: |
-          pip install papermill jupyter
-          
-      - name: Execute notebook
-        run: |
-          mkdir -p logs
           papermill autolog.ipynb logs/output_$(date +\%Y-\%m-\%d).ipynb
+
+      - name: Verify output
+        run: ls logs/
 
       - name: Commit and push changes
         env:

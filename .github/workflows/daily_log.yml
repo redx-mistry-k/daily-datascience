@@ -18,9 +18,6 @@ jobs:
       - name: Install dependencies
         run: pip install papermill jupyter
 
-      - name: Create logs directory
-        run: mkdir -p logs
-
       - name: Run notebook
         run: |
           papermill autolog.ipynb logs/output_$(date +\%Y-\%m-\%d).ipynb

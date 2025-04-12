@@ -1,0 +1,17 @@
+name: Daily Log
+on:
+  schedule:
+    - cron: "0 9 * * *"  # 9 AM UTC daily
+jobs:
+  run-log:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: conda-incubator/setup-miniconda@v2
+      - run: |
+          conda install -c conda-forge papermill jupyter
+          papermill autolog.ipynb logs/output_$(date +\%Y-\%m-\%d).ipynb
+      - uses: actions/upload-artifact@v3
+        with:
+          name: daily-log
+          path: logs/
